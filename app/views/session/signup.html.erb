@@ -1,0 +1,9 @@
+<h1> Sign Up </h1>
+<form action="/users" method="POST" style="display: inline;">
+	User Name: <input name="name"><br />
+	Email: <input name="email"><br />
+	Zipcode: <input name="zipcode"><br />
+	Password: <input name="password"><br />
+	<input name="authenticity_token" value="<%= form_authenticity_token() %>" type="hidden">
+	<button id="sign-in">Submit</button>
+</form>

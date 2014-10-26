@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
 
+  get '/login' => 'session#index'
+  post '/login' => 'session#create'
+  delete '/login' => 'session#destroy'
+  get '/signup' => 'session#signup' 
+  get '/calendar' => 'events#set'
   resources :users
+  resources :events  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

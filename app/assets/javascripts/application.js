@@ -11,11 +11,21 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery_ujs
 //= require moment
 //= require fullcalendar
 //= require turbolinks
-//= require_tree .
+//= require twitter/bootstrap
+// require_tree .
+//= require ./libraries/underscore
+//= require ./libraries/backbone
+
+//= require ./backbone/app
+//= require ./backbone/models/Event
+//= require ./backbone/models/Friend
+//= require ./backbone/collections/EventsCollection
+//= require ./backbone/collections/FriendsCollection
+//= require ./backbone/views/Event/EventListView
+//= require ./backbone/views/Friend/FriendListView
 
 $(document).ready(function() {
 
@@ -25,4 +35,12 @@ $(document).ready(function() {
         // put your options and callbacks here
     })
 
+});
+
+$(function(){
+	var days = $('tr').children().find('td.fc-day');
+	$.ajax({url: 'http://127.0.0.1:3000/calendar', success: function(e){
+		debugger
+
+	}});
 });

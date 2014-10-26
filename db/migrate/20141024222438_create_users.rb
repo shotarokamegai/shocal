@@ -1,8 +1,11 @@
 class CreateUsers < ActiveRecord::Migration
   def change
     create_table :users do |t|
-
-      t.timestamps
+    	t.string :name
+    	t.string :email
+    	t.integer :zipcode
+    	t.string :password_digest
+      	t.timestamps
     end
   end
 end
