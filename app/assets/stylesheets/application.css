@@ -12,6 +12,7 @@
  *
  *= require fullcalendar
  *= require bootstrap_and_overrides
+ *= require twitter-bootstrap-static/fontawesome
  *= require_tree .
  *= require_self
  */

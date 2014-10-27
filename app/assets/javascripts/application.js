@@ -38,9 +38,34 @@ $(document).ready(function() {
 });
 
 $(function(){
-	var days = $('tr').children().find('td.fc-day');
-	$.ajax({url: 'http://127.0.0.1:3000/calendar', success: function(e){
-		debugger
+	var userId = window.location.pathname.split('/')[2]
+	$.ajax({url: 'http://localhost:3000/calendar', type: 'GET', data: { user_id: userId } }).done(function(events){
+		$(events).each(function(e){
+			var day = $('tr').children().find('td[data-date=' + this.date + ']')[0];
+			var p = document.createElement('p');
+			$(p).attr('class', 'event');
+			$(p).attr('id', this.id);			
+			$(p).text(this.title);
+			$(day).append(p);
+		});
+		var schedule = $('td').find('p[class="event"]');
+			$(schedule).click(function() {
+	  		console.log('Good Job!');
+		});
+	});
+});
 
-	}});
+ $(function(){
+    $(".dropdown-menu li a").click(function(){
+    	$('input#hidden').remove();
+	    $(this).parent('li').parent().parent().find('button').text($(this).text());
+	    $(this).parent('li').parent().parent().find('button').val($(this).text());
+	    var hidden = document.createElement('input')
+	    $(hidden).attr('name', 'category');
+	    $(hidden).attr('type', 'hidden');
+	    $(hidden).attr('id', 'hidden');
+	    $(hidden).attr('value', $(this).text());
+	    $('form.navbar-form').append(hidden);
+	    debugger
+   });
 });

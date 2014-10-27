@@ -1,0 +1,54 @@
+<div class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">ShoCal</a>
+        <div class="navbar-collapse collapse navbar-responsive-collapse">
+          <ul class="nav navbar-nav">
+          	<li>
+          		<form class="navbar-form navbar-left" role="search" action="/events" method="POST">
+          		  <div class="dropdown" style="display: inline;">
+  				        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+    			          Category
+    			          <span class="caret"></span>
+  				        </button>
+  				        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+    				        <li role="presentation"><a role="menuitem" tabindex="-1">Music</a></li>
+    				        <li role="presentation"><a role="menuitem" tabindex="-1">Sports</a></li>
+    				        <li role="presentation"><a role="menuitem" tabindex="-1">Food</a></li>
+  				        </ul>
+				        </div>
+        		<div class="form-group">
+          			<input name="keyword" type="text" class="form-control" placeholder="Search">
+        		</div>
+        		<button type="submit" class="btn btn-default">Search</button>
+      			</form>
+          	</li>
+            <li><%= user.name %>'s Calendar for <%= user.zipcode %></li>
+            <li><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">Add Event</button></li>
+            <li><button type="button" class="btn btn-default btn-sm"><%= link_to "Profile", "/user/:id"  %></button></li>
+            <li>
+              <form action="/login" method="DELETE" style="display: inline;">
+                <input type="submit" value="Log Out">
+<!--                 <button id="log-out" type="button" class="btn btn-default btn-sm">Log Out</button> -->
+              </form>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+<ul>
+<% events.each do |event| %>
+<li>
+	<div class="event-result">
+		<h2>Artist: <%= event["name"]["text"] %></h2>
+		<h4>Description: <%= event["description"]["text"] %></h4>
+		<h4>URL: <a href="<%= event["url"] %>"><%= event["url"] %></a></h4>
+		<h4><img src="<%= event["logo_url"] %>"></h4>
+	</div>
+</li>
+<% end %>
+</ul>

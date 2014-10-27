@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
-	def index
+	def show
 		user = User.find(session[:user_id])
 		events = user.events
-		render(:index, { locals: { user: user, events: events } })
+		render(:show, { locals: { user: user, events: events } })
 	end
 
 	def create

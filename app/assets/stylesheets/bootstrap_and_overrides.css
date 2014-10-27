@@ -8,6 +8,7 @@
   
 body {
 	text-align: center;
+	list-style: none;
 }
 
 ul.nav.navbar-nav {
