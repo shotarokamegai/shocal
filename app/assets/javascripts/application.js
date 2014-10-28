@@ -19,13 +19,6 @@
 // require_tree .
 //= require ./libraries/underscore
 
-//= require ./backbone/models/Event
-//= require ./backbone/models/Friend
-//= require ./backbone/collections/EventsCollection
-//= require ./backbone/collections/FriendsCollection
-//= require ./backbone/views/Event/EventListView
-//= require ./backbone/views/Friend/FriendListView
-
 $(document).ready(function() {
 
     // page is now ready, initialize the calendar...
