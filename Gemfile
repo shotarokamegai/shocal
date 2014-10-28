@@ -42,7 +42,3 @@ gem 'momentjs-rails'
 gem 'pry-rails'
 gem "twitter-bootstrap-rails"
 gem 'httparty'
-# gem 'eventbrite'
-# gem 'rails_12factor', group: :production
-
-ruby '2.1.2'
