@@ -43,3 +43,6 @@ gem 'pry-rails'
 gem "twitter-bootstrap-rails"
 gem 'httparty'
 # gem 'eventbrite'
+
+ruby "2.1.2"
+gem 'rails_12factor', group: :production
