@@ -8,8 +8,12 @@
   
 body {
 	text-align: center;
-	text-decoration: none;
 	font-family: 'Titillium Web', sans-serif;
+	background: #F0F0F0;
+}
+
+div.fc-view-container {
+	background-color: white;
 }
 
 h1.login {
@@ -54,6 +58,11 @@ h1.logo {
 	margin-top: 0.8%;
 }
 
+h1.logo a {
+	color: #F0F0F0;
+	text-decoration: none;
+}
+
 ul.nav.navbar-nav {
 	float: right;
 	width: 50%;
@@ -85,7 +94,7 @@ li {
 }
 
 div.event-result {
-	height: 140px;
+	height: 200px;
 	position: relative;
 }
 
@@ -95,6 +104,10 @@ div.event-result p {
 
 div.event-result div#two, div.event-result div#three {
 	text-align: left;
+}
+
+div#three div.row {
+	width: 100%;
 }
 
 div.button-option {
@@ -113,9 +126,25 @@ td.fc-day {
 }
 
 td.fc-day:hover {
-	background-color: #E8FFE2;
+	background-color: #F0F0F0;
 }
 
 div.event a span {
 	margin-right: 2%;
+}
+
+div#two div.row {
+	margin-top: 20px;
+}
+
+div#three div.row {
+	margin-top: 20px;
+}
+
+button#add-eventbrite.btn.btn-info {
+	margin-left: 19%;
+}
+
+div.show-event label {
+	margin-right: 6%;
 }

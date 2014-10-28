@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   get '/calendar' => 'events#set'
   post '/add' => 'events#createown'
   resources :users
-  resources :events  
+  post '/users/:id/events' => 'events#create'
+  post '/users/:id/events/:id' => 'events#event'
+  resources :events
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -5,21 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= content_for?(:title) ? yield(:title) : "ShoCal" %></title>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcW2ZYutgvuxvQTZIlhKM9O2yrwSReSU8"></script>
-    <style type="text/css">
-      html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
-    </style>
-    <script type="text/javascript">
-      function initialize() {
-        var mapOptions = {
-          center: { lat: -34.397, lng: 150.644},
-          zoom: 8
-        };
-        var map = new google.maps.Map(document.getElementById('map-canvas'),
-            mapOptions);    
-      }
-      google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
+    <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcW2ZYutgvuxvQTZIlhKM9O2yrwSReSU8"></script> -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
     <%= csrf_meta_tags %>

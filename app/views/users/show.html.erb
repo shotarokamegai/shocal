@@ -9,7 +9,7 @@
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
           	<li>
-          		<form class="navbar-form navbar-left" role="search" action="/events" method="POST">
+          		<form class="navbar-form navbar-left" role="search" action="/users/<%= user.id %>/events" method="POST">
           		  <div class="dropdown" style="display: inline;">
   				        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
     			          category
@@ -28,8 +28,8 @@
       			</form>
           	</li>
               <!-- <li><h4><%= user.name %>'s Calendar for <%= user.zipcode %></h4></li> -->
-              <li><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span></button></li>
-              <li><button type="button" class="btn btn-default btn-sm"><a href="/users/<%= user.id %>/profile"><span class="glyphicon glyphicon-user"></span></a></button></li>
+              <li><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#addEvent"><span class="glyphicon glyphicon-plus"></span></button></li>
+              <li><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#profileModal"><span class="glyphicon glyphicon-user"></span></button></li>
               <li>
                 <form action="/login" method="DELETE" style="display: inline;">
                   <input type="submit" value="Log Out">
@@ -44,20 +44,18 @@
       <div class="row">
         <div class="col-lg-12">
           <%= bootstrap_flash %>
-          <h2><%= user.name %>'s calendar for <%= user.zipcode %></h2>
+          <h2><%= user.name %>'s calendar for <%= city %>, <%= state %></h2>
           <div id='calendar'>
           </div>
         </div>
       </div><!--/row-->
-
-      <footer>
         <p>&copy; ShoCal 2014</p>
       </footer>
 
     </div> <!-- /container -->
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- modal for add event -->
+<div class="modal fade" id="addEvent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -65,35 +63,35 @@
         <h4 class="modal-title" id="myModalLabel">add event</h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" role="form" action="/events/<%= user.id %>" method="POST">
+        <form class="form-horizontal" role="form">
           <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">title</label>
             <div class="col-sm-10">
-              <input id="title" class="form-control" id="inputEmail3" placeholder="Title">
+              <input id="title" class="form-control" placeholder="Title">
             </div>
           </div>
           <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">date</label>
             <div class="col-sm-10">
-              <input id="date" class="form-control" id="inputEmail3" placeholder="Date">
+              <input id="date" class="form-control" placeholder="Date">
             </div>
           </div>
           <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">address</label>
             <div class="col-sm-10">
-              <input id="address" class="form-control" id="inputEmail3" placeholder="Address">
+              <input id="address" class="form-control" placeholder="Address">
             </div>
           </div>
           <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">url</label>
             <div class="col-sm-10">
-              <input id="url" class="form-control" id="inputEmail3" placeholder="URL">
+              <input id="url" class="form-control" placeholder="URL">
             </div>
           </div>
           <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">image url</label>
             <div class="col-sm-10">
-              <input id="image" class="form-control" id="inputEmail3" placeholder="Image URL">
+              <input id="image" class="form-control" placeholder="Image URL">
             </div>
           </div>
           <div class="form-group">
@@ -128,3 +126,76 @@
     </div>
   </div>
 </div>
+
+<!-- modal for profile -->
+<div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">close</span></button>
+        <h4 class="modal-title" id="myModalLabel"><%= user.name %></h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">username</label>
+            <div class="col-sm-10">
+              <input id="name" class="form-control" placeholder="<%= user.name %>">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">email</label>
+            <div class="col-sm-10">
+              <input id="email" class="form-control" placeholder="<%= user.email %>">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">zipcode</label>
+            <div class="col-sm-10">
+              <input id="zipcode" class="form-control" placeholder="<%= user.zipcode %>">
+            </div>
+          </div>
+        </form>  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+        <button type="button" class="btn btn-primary" id="update-profile">save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal for show an event -->
+<div class="modal fade" id="showEvent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">close</span></button>
+        <h4 class="modal-title event-title"></h4>
+        <p class="event-image"></p>
+      </div>
+      <div class="modal-body show-event" style="text-align: left;">
+        <label for="inputEmail3" class="col-sm-2 control-label">date:</label>
+        <p class="event-date"></p>
+        <label for="inputEmail3" class="col-sm-2 control-label">category:</label>
+        <p class="event-category"></p>        
+        <label for="inputEmail3" class="col-sm-2 control-label">address:</label>
+        <p class="event-address"></p>
+        <label for="inputEmail3" class="col-sm-2 control-label">url:</label>
+        <p class="event-url"></p>
+        <label for="inputEmail3" class="col-sm-2 control-label">description:</label>
+        <p class="event-description"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">edit</button>
+        <button type="button" class="btn btn-primary">delete</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script type="text/javascript">
+  $('document').ready(function(){
+    $('a.tooltip').tooltip();
+  });
+</script>

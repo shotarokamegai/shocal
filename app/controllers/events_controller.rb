@@ -2,6 +2,15 @@ require 'httparty'
 require 'json'
 require 'open-uri'
 class EventsController < ApplicationController
+
+	def event
+		user = User.find(session[:user_id])
+		event = user.events.find(params[:id])
+		respond_to do |format|
+			format.json { render :json => event }
+		end
+	end
+
 	def create
 		user = User.find(session[:user_id])
 		arry = []
