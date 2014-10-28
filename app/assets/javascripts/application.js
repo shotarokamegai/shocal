@@ -18,9 +18,7 @@
 //= require twitter/bootstrap
 // require_tree .
 //= require ./libraries/underscore
-//= require ./libraries/backbone
 
-//= require ./backbone/app
 //= require ./backbone/models/Event
 //= require ./backbone/models/Friend
 //= require ./backbone/collections/EventsCollection
