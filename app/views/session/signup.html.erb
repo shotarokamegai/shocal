@@ -1,9 +1,18 @@
-<h1> Sign Up </h1>
-<form action="/users" method="POST" style="display: inline;">
-	User Name: <input name="name"><br />
-	Email: <input name="email"><br />
-	Zipcode: <input name="zipcode"><br />
-	Password: <input name="password"><br />
-	<input name="authenticity_token" value="<%= form_authenticity_token() %>" type="hidden">
-	<button id="sign-in">Submit</button>
-</form>
+<body style="background-color: #F1F1F1;">
+<h1 class="signup"> sign up for ShoCal</h1>
+<div class="signup">
+	<form action="/users" method="POST" style="display: inline;">
+		<p>username</p>
+		<input name="name"><br />
+		<p>email</p>
+		<input name="email"><br />
+		<p>zipcode</p>
+		<input name="zipcode"><br />
+		<p>password</p>
+		<input name="password"><br />
+		<input name="authenticity_token" value="<%= form_authenticity_token() %>" type="hidden">
+		<button id="sign-in">submit</button>
+	</form>
+</div>
+<p style="margin-top: 2%;"><a href="/login">back to login page</a></p>
+</body>

@@ -1,18 +1,20 @@
-<% if @error %>
-	<p style='color: red;'>Incorrect email/password</p>
-<% end %>
-
-<h1> Log In </h1>
-<form action="/login" method="POST" style="display: inline;">
-	Email: <input name="email"><br />
-	Password: <input name="password"><br />
-	<input name="authenticity_token" value="<%= form_authenticity_token() %>" type="hidden">
-	<button id="sign-in">Log In</button>
-</form>
-<form action="/signup" method="GET" style="display: inline;">
-	<button id="create-account">Create Account</button>
-</form>
-<br /><br />
-<form action="/login" method="DELETE">
-	<button id="log-out">Log Out</button>
-</form>
+<body style="background-color: #F1F1F1;">
+<h1 class="login"> ShoCal </h1>
+<div class="login">
+	<% if @error %>
+		<p style='color: red;'>incorrect email/password</p>
+	<% end %>
+	<form action="/login" method="POST" style="display: inline;">
+		<p>email</p>
+		<input name="email"><br />
+		<p>password</p>
+		<input name="password"><br />
+		<input name="authenticity_token" value="<%= form_authenticity_token() %>" type="hidden">
+		<button id="sign-in">log in</button>
+	</form>
+	<form action="/signup" method="GET" style="display: inline;">
+		<button id="create-account">create account</button>
+	</form>
+	<br /><br />
+</div>
+</body>

@@ -3,7 +3,6 @@ require 'json'
 require 'open-uri'
 class EventsController < ApplicationController
 	def create
-		binding.pry
 		user = User.find(session[:user_id])
 		arry = []
 		i = 0
@@ -15,7 +14,7 @@ class EventsController < ApplicationController
 			arry << events[i]
 			i = i + 1
 		end
-		render(:result, { locals: { events: arry, user: user } } )
+		render(:result, { locals: { events: arry, user: user, category: params[:category] } } )
 	end
 
 	def set
@@ -27,7 +26,21 @@ class EventsController < ApplicationController
 	end
 
 	def createown
-		user = User.find(params[:id])
-		binding.pry
+		user = User.find(params[:user_id])
+		event = Event.create({
+			user_id: params[:user_id],
+			title: params[:title],
+			date: params[:date],
+			address: params[:address],
+			url: params[:url],
+			image: params[:image],
+			category: params[:category],
+			description: params[:description]
+		})
+		respond_to do |format|
+			format.json { render :json => event }
+		end
 	end
 end
+
+

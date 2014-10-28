@@ -8,9 +8,114 @@
   
 body {
 	text-align: center;
-	list-style: none;
+	text-decoration: none;
+	font-family: 'Titillium Web', sans-serif;
+}
+
+h1.login {
+	margin-top: 5%;
+	margin-bottom: -10%;
+}
+
+div.login {
+	margin: 15% 30% 0 30%;
+	padding: 3% 0 3% 0;
+	background-color: white;
+	box-shadow: 0 1px 3px rgba(0,0,0,.13);
+}
+
+div.login input {
+	margin-bottom: 5%;
+}
+
+div.signup {
+	margin: 5% 30% 0 30%;
+	padding: 2%;
+	background-color: white;
+	box-shadow: 0 1px 3px rgba(0,0,0,.13);
+}
+
+h1.signup {
+	margin-top: 5%;
+}
+
+div.signup input {
+	margin-bottom: 2%;
+}
+
+div.signup button {
+	margin-top: 3%;
+}
+
+h1.logo {
+	margin: 0;
+	float: left;
+	font-size: 2em;
+	margin-top: 0.8%;
 }
 
 ul.nav.navbar-nav {
 	float: right;
+	width: 50%;
+}
+
+ul.nav.navbar-nav li {
+	margin-right: 1%;
+}
+
+ul.nav.navbar-nav li:nth-child(1) {
+	margin-right: 14%;
+}
+
+ul.nav.navbar-nav li:nth-child(2) {
+	color: white;
+	margin-top: 1.8%;
+}
+
+ul.nav.navbar-nav li:nth-child(3) {
+	margin-top: 1.8%;
+}
+
+ul.nav.navbar-nav li:nth-child(4) {
+	margin-top: 2.2%;
+}
+
+li {
+	list-style: none;	
+}
+
+div.event-result {
+	height: 140px;
+	position: relative;
+}
+
+div.event-result p {
+	visibility: hidden;
+}
+
+div.event-result div#two, div.event-result div#three {
+	text-align: left;
+}
+
+div.button-option {
+	position: absolute;
+	bottom: -50px;
+}
+
+div.event {
+	width: 137.25px;
+	position: absolute;
+	bottom: 0;
+}
+
+td.fc-day {
+	padding: 1%;
+}
+
+td.fc-day:hover {
+	background-color: #E8FFE2;
+}
+
+div.event a span {
+	margin-right: 2%;
 }

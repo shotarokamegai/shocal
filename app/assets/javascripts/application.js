@@ -14,6 +14,7 @@
 //= require moment
 //= require fullcalendar
 //= require turbolinks
+//= require mapScript
 //= require twitter/bootstrap
 // require_tree .
 //= require ./libraries/underscore
@@ -38,24 +39,31 @@ $(document).ready(function() {
 });
 
 $(function(){
+	var daysCol = $('td.fc-day')
+	$(daysCol).each(function(){
+		$(this).css('style', 'position: relative;');
+		var div = document.createElement('div');
+		$(div).attr('class', 'event');
+		$(this).append(div);
+	});
 	var userId = window.location.pathname.split('/')[2]
 	$.ajax({url: 'http://localhost:3000/calendar', type: 'GET', data: { user_id: userId } }).done(function(events){
 		$(events).each(function(e){
 			var day = $('tr').children().find('td[data-date=' + this.date + ']')[0];
-			var p = document.createElement('p');
-			$(p).attr('class', 'event');
-			$(p).attr('id', this.id);			
-			$(p).text(this.title);
-			$(day).append(p);
-		});
-		var schedule = $('td').find('p[class="event"]');
-			$(schedule).click(function() {
-	  		console.log('Good Job!');
+			var div = $(day).find('div.event');
+			var a = document.createElement('a');
+			var span = document.createElement('span');
+			$(span).attr('class', 'glyphicon glyphicon-file');
+			$(a).attr('class', 'event');
+			$(a).attr('id', this.id);		
+			$(a).append(span);
+			$(div).append(a);
+			$(day).append(div);
 		});
 	});
 });
 
- $(function(){
+$(function(){
     $(".dropdown-menu li a").click(function(){
     	$('input#hidden').remove();
 	    $(this).parent('li').parent().parent().find('button').text($(this).text());
@@ -66,6 +74,53 @@ $(function(){
 	    $(hidden).attr('id', 'hidden');
 	    $(hidden).attr('value', $(this).text());
 	    $('form.navbar-form').append(hidden);
-	    debugger
-   });
+    });
+
+	$('button#add-event').click(function(e){
+		e.preventDefault();
+		console.log('AJAX!');
+		var userId = window.location.pathname.split('/')[2]
+		var title = $('input#title').val();
+		var date = $('input#date').val();
+		var address = $('input#address').val();
+		var url = $('input#url').val();
+		var image = $('input#image').val();	
+		var category = $('button.dropdown-toggle')[1]
+		category = $(category).attr('value');	
+		var description = $('input#description').val();	
+		$.ajax({
+            url: 'http://localhost:3000/add',
+            data: { user_id: userId, title: title, date: date, address: address, url: url, image: image, category: category, description: description },
+            type: 'POST',
+            success: function(data){
+        		var userId = window.location.pathname.split('/')[2]
+				var day = $('tr').children().find('td[data-date=' + data.date + ']')[0];
+				var a = document.createElement('a');
+				$(a).attr('class', 'event');
+				$(a).attr('id', data.id);			
+				$(a).text(data.title);
+				$(day).append(a);
+			}
+		});
+	});
 });
+
+$(function(){
+	var $setElm = $('div.event-result').find('p');
+	var cutFigure = '120';
+	var afterTxt = ' …';
+
+	$setElm.each(function(){
+		var textLength = $(this).text().length;
+		var textTrim = $(this).text().substr(0,(cutFigure))
+
+		if(cutFigure < textLength) {
+			$(this).html(textTrim + afterTxt).css({visibility:'visible'});
+		} else if(cutFigure >= textLength) {
+			$(this).css({visibility:'visible'});
+		}
+	});
+});
+
+
+

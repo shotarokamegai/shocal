@@ -11,8 +11,7 @@
  * file per style scope.
  *
  *= require fullcalendar
- *= require bootstrap_and_overrides
- *= require twitter-bootstrap-static/fontawesome
+ *= require twitter-bootstrap-static/bootstrap
  *= require_tree .
  *= require_self
  */

@@ -1,54 +1,107 @@
-<div class="navbar navbar-default navbar-static-top">
+<div class="navbar navbar-default navbar-static-top navbar-inverse">
       <div class="container">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">ShoCal</a>
+        <h1 class="logo"><a href="/users/<%= user.id %>">ShoCal</a></h1>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
           	<li>
           		<form class="navbar-form navbar-left" role="search" action="/events" method="POST">
           		  <div class="dropdown" style="display: inline;">
   				        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-    			          Category
+    			          category
     			          <span class="caret"></span>
   				        </button>
   				        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-    				        <li role="presentation"><a role="menuitem" tabindex="-1">Music</a></li>
-    				        <li role="presentation"><a role="menuitem" tabindex="-1">Sports</a></li>
-    				        <li role="presentation"><a role="menuitem" tabindex="-1">Food</a></li>
+    				        <li role="presentation"><a role="menuitem" tabindex="-1">music&nbsp;&nbsp;</a></li>
+    				        <li role="presentation"><a role="menuitem" tabindex="-1">sports&nbsp;</a></li>
+    				        <li role="presentation"><a role="menuitem" tabindex="-1">food&nbsp;&nbsp;&nbsp;</a></li>
   				        </ul>
 				        </div>
         		<div class="form-group">
-          			<input name="keyword" type="text" class="form-control" placeholder="Search">
+          			<input name="keyword" type="search" class="form-control" placeholder="search events">
         		</div>
-        		<button type="submit" class="btn btn-default">Search</button>
+        		<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
       			</form>
           	</li>
-            <li><%= user.name %>'s Calendar for <%= user.zipcode %></li>
-            <li><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">Add Event</button></li>
-            <li><button type="button" class="btn btn-default btn-sm"><%= link_to "Profile", "/user/:id"  %></button></li>
-            <li>
-              <form action="/login" method="DELETE" style="display: inline;">
-                <input type="submit" value="Log Out">
-<!--                 <button id="log-out" type="button" class="btn btn-default btn-sm">Log Out</button> -->
-              </form>
-            </li>
+              <!-- <li><h4><%= user.name %>'s Calendar for <%= user.zipcode %></h4></li> -->
+              <li><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span></button></li>
+              <li><button type="button" class="btn btn-default btn-sm"><a href="/users/<%= user.id %>/profile"><span class="glyphicon glyphicon-user"></span></a></button></li>
+              <li>
+                <form action="/login" method="DELETE" style="display: inline;">
+                  <input type="submit" value="Log Out">
+  <!--                 <button id="log-out" type="button" class="btn btn-default btn-sm">Log Out</button> -->
+                </form>
+              </li>
           </ul>
         </div>
       </div>
     </div>
-<ul>
-<% events.each do |event| %>
-<li>
-	<div class="event-result">
-		<h2>Artist: <%= event["name"]["text"] %></h2>
-		<h4>Description: <%= event["description"]["text"] %></h4>
-		<h4>URL: <a href="<%= event["url"] %>"><%= event["url"] %></a></h4>
-		<h4><img src="<%= event["logo_url"] %>"></h4>
+<!-- <div class="row">
+	<div class="col-md-2 col-md-offset-1">
+		<h4>title</h4>
+	</div>	
+	<div class="col-md-2">
+		<h4>date/location</h4>
 	</div>
-</li>
+	<div class="col-md-2">
+		<h4>description/url</h4>
+	</div>	
+	<div class="col-md-2">
+		<h4>map</h4>		
+	</div>	
+	<div class="col-md-2">
+		<h4>add event</h4>		
+	</div>
+	<div class="col-md-1">
+		
+	</div>
+</div> -->
+<% events.each do |event| %>
+<div class="event-result row">
+	<div class="col-md-3" id="one">
+		<h3><%= event["name"]["text"] %></h3>
+		<img src="<%= event["logo_url"] %>" class="img-thumbnail" style="width: 90px; height: 90px" style="display: inline;">
+	</div>
+	<div class="col-md-3" id="two">
+		<div class="row">
+			<strong>date:</strong><br />
+			<h4><% time = event["start"]["local"] %>
+				<% year = time.split('-')[0] %>
+				<% month = time.split('-')[1] %>
+				<% yo = time.split('-')[2] %>
+				<% date = yo.split('T')[0] %>
+				<% time = yo.split('T')[1] %>
+				<%= year %>/<%= month %>/<%= date %> <%= time %></h4>
+		</div>	
+		<div class="row">
+			<strong>address:</strong><br /> 
+			<h4><%= event["venue"]["address"]["address_1"] %>, 
+				<%= event["venue"]["address"]["city"] %>,
+				<%= event["venue"]["address"]["region"] %>, 
+				<%= event["venue"]["address"]["postal_code"]%>, 
+				<%= event["venue"]["address"]["country"]%>
+			</h4>
+		</div>
+	</div>
+	<div class="col-md-3" id="three">
+		<div class="row">
+			<p>
+			<strong>description:</strong> <%= event["description"]["text"] %>
+			</p>
+			<p><a href="<%= event["url"] %>"><%= event["url"] %></a></p>
+		</div>
+		<div class="button-option row">
+			<button type="button" class="btn btn-info">add event</button>&nbsp;&nbsp;
+			<button type="button" class="btn btn-info">share</button>
+		</div>	
+	</div>
+	<div class="col-md-3" id="four">
+		<div id="map-canvas" style="width: 50%; height: 50%"></div>
+	</div>
+</div>
+<hr />
 <% end %>
-</ul>

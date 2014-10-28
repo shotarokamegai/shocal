@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   delete '/login' => 'session#destroy'
   get '/signup' => 'session#signup' 
   get '/calendar' => 'events#set'
-  post '/events/:id' => 'event#createown'
+  post '/add' => 'events#createown'
   resources :users
   resources :events  
   # The priority is based upon order of creation: first created -> highest priority.
