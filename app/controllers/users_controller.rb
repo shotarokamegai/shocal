@@ -13,7 +13,7 @@ class UsersController < ApplicationController
 
 	def create
 		user = User.create(name: params[:name], email: params[:email], zipcode: params[:zipcode], password: params[:password])
-		redirect_to '/login'
+		redirect_to '/'
 	end
 
 	def view
