@@ -50,6 +50,12 @@ class EventsController < ApplicationController
 			format.json { render :json => event }
 		end
 	end
+
+	def destroy
+		event = Event.find(params[:id])
+		event.destroy
+		redirect_to '/users'
+	end
 end
 
 

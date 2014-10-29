@@ -42,3 +42,6 @@ gem 'momentjs-rails'
 gem 'pry-rails'
 gem "twitter-bootstrap-rails"
 gem 'httparty'
+
+gem 'rails_12factor'
+

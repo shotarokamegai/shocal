@@ -136,6 +136,23 @@ $(function(){
 	$(leftButton).click(function(){
 		renderEvents();
 	});
+
+//delete event
+	
+	 $('button#deleteEvent').click(function(){
+	 	var eventId = $(this).parent().children()[1];
+	 	eventId     = $(eventId).attr('value');
+	 	$.ajax({ url: '/events', type: 'DELETE', data: { id: eventId }, success: function(){
+
+	 	} });
+	 });
+
+});
+
+//date picker
+
+$(function(){
+	$( "#datepicker" ).datepicker();
 });
 
 //limit the number of letters in description
@@ -202,6 +219,7 @@ function renderEvents(){
 					var a = document.createElement('a');
 					$(a).attr('id', 'showEventModal');
 					$(a).text(e.url);
+					$('input.hidden-id').attr('value', e.id);
 					$('p.event-url').text('');
 					$('p.event-url').append(a);
 					$('p.event-description').text(e.description);
