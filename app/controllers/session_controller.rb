@@ -21,6 +21,6 @@ class SessionController < ApplicationController
 	def destroy
 		binding.pry
 		reset_session
-		redirect_to '/login'
+		redirect_to '/'
 	end
 end
