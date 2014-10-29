@@ -135,6 +135,7 @@ $(function(){
 	var leftButton = $('button.fc-corner-left')[1];
 	$(leftButton).click(function(){
 		renderEvents();
+		alert('your event has been updated!');
 	});
 
 //delete event
@@ -142,8 +143,8 @@ $(function(){
 	 $('button#deleteEvent').click(function(){
 	 	var eventId = $(this).parent().children()[1];
 	 	eventId     = $(eventId).attr('value');
-	 	$.ajax({ url: '/events', type: 'DELETE', data: { id: eventId }, success: function(){
-
+	 	$.ajax({ url: '/events/' + eventId, type: 'DELETE', data: { id: eventId }, success: function(){
+			renderEvents();	 		
 	 	} });
 	 });
 

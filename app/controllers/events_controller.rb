@@ -54,7 +54,9 @@ class EventsController < ApplicationController
 	def destroy
 		event = Event.find(params[:id])
 		event.destroy
-		redirect_to '/users'
+		respond_to do |format|
+			format.json { render :json => event }
+		end		
 	end
 end
 
