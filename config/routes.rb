@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
-  get '/login' => 'session#index'
-  post '/login' => 'session#create'
+  get '/' => 'session#index'
+  post '/' => 'session#create'
   delete '/login' => 'session#destroy'
   get '/signup' => 'session#signup' 
   get '/calendar' => 'events#set'
