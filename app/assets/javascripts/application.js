@@ -80,7 +80,7 @@ $(function(){
 //edit event
 
 	$('button#editEvent').click(function(){
-		alert('your event has been edited!');
+		alert('your event has been added!');
 		var eventId = $('input.hidden-id').attr('value');
 		var userId = window.location.pathname.split('/')[2];
 		var title = $('p.event-title').text();	
@@ -124,7 +124,7 @@ $(function(){
 //add events from eventbrite
 
 	$('button#add-eventbrite').click(function(){
-		alert('your event has been created!');
+		alert('the event has been added!');
 		var userId = window.location.pathname.split('/')[2];
 		var description = $(this).parent().parent().children()[0];
 		description     = $(description).find('p')[0];
@@ -132,9 +132,10 @@ $(function(){
 		var title       = $(this).parent().parent().parent().find('div#one').find('h3').text();
 		var image       = $(this).parent().parent().parent().find('div#one').find('img').attr('src');
 		var date        = $(this).parent().parent().parent().find('div#two').find('h4')[0];
-		date            = $(date).text().split(' ')[0];
+		date            = $(date).text();
 		date            = date.replace(/^\s+/g, "");
-		date            = date.replace(/\s+$/g, "");
+		// date            = date.replace(/\s+$/g, "");
+		date            = date.split(' ')[0];
 		var address     = $(this).parent().parent().parent().find('div#two').find('h4')[1];
 		address         = $(address).text();
 		address         = address.replace(/^\s+/g, "");
@@ -143,7 +144,7 @@ $(function(){
 		url             = $(url).find('a').attr('href');
 		var category    = $('h4')[0];
 		category        = $(category).text();
-		category        = $(category).replace(/category/, '');
+		category        = category.replace(/category: /, '');
 		addBriteAjax(userId, title, date, address, url, image, category, description);
 	});
 
@@ -152,7 +153,11 @@ $(function(){
 	var leftButton = $('button.fc-corner-left')[1];
 	$(leftButton).click(function(){
 		renderEvents();
-		alert('your event has been updated!');
+	});
+
+	var rightButton = $('button.fc-corner-right')[1];
+	$(rightButton).click(function(){
+		renderEvents();
 	});
 
 //delete event
@@ -242,14 +247,14 @@ function renderEvents(){
 			var day = $('tr').children().find('td[data-date=' + this.date + ']')[0];
 			var div = $(day).find('div.event');
 			$(div).children().remove();
+			$(div).remove();
 			var a = document.createElement('a');
-			// var span = document.createElement('span');
-			// $(span).attr('class', 'glyphicon glyphicon-file');
+			var div = document.createElement('div');
+			$(div).attr('class', 'event');
 			$(a).attr('class', 'event');
 			$(a).attr('id', this.id);		
 			$(a).attr('data-target', '#showEvent')
 			$(a).attr('data-toggle' ,'modal')
-			// $(a).append(span);
 			$(a).text(this.title);
 			$(div).append(a);
 			$(day).append(div);

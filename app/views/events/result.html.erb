@@ -1,49 +1,49 @@
-    <div class="navbar navbar-default navbar-static-top navbar-inverse">
-      <div class="container">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <h1 class="logo"><a href="/users/<%= user.id %>">ShoCal</a></h1>
-        <div class="navbar-collapse collapse navbar-responsive-collapse">
-          <ul class="nav navbar-nav">
-            <li>
-              <form class="navbar-form navbar-left" role="search" action="/users/<%= user.id %>/events" method="POST">
-              <input data-provide="datepicker" id="datepicker" class="form-control" placeholder="date" name="date">
-                <div class="dropdown" style="display: inline;">
-                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-                    category
-                    <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                    <li role="presentation" style="margin-left: 0;"><a role="menuitem" tabindex="-1">music</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1">sports</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1">food/drinks</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1">entertaining</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1">networking</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1">business</a></li>
-                  </ul>
-                </div>
-            <div class="form-group">
-                <input name="keyword" type="search" class="form-control" placeholder="search events">
+<div class="navbar navbar-default navbar-static-top navbar-inverse">
+  <div class="container">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <h1 class="logo"><a href="/users/<%= user.id %>">ShoCal</a></h1>
+    <div class="navbar-collapse collapse navbar-responsive-collapse">
+      <ul class="nav navbar-nav">
+        <li>
+          <form class="navbar-form navbar-left" role="search" action="/users/<%= user.id %>/events" method="POST">
+          <input data-provide="datepicker" id="datepicker" class="form-control" placeholder="date" name="date">
+            <div class="dropdown" style="display: inline;">
+              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                category
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation" style="margin-left: 0;"><a role="menuitem" tabindex="-1">music</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">sports</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">food/drinks</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">entertaining</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">networking</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1">business</a></li>
+              </ul>
             </div>
-            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-            </form>
-            </li>
-              <!-- <li><h4><%= user.name %>'s Calendar for <%= user.zipcode %></h4></li> -->
-              <li><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#addEvent"><span class="glyphicon glyphicon-plus"></span></button></li>
-              <li><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#profileModal"><span class="glyphicon glyphicon-user"></span></button></li>
-              <li>
-                <form action="/login" method="DELETE" style="display: inline;">
-                  <input type="submit" value="Log Out">
-  <!--                 <button id="log-out" type="button" class="btn btn-default btn-sm">Log Out</button> -->
-                </form>
-              </li>
-          </ul>
+        <div class="form-group">
+            <input name="keyword" type="search" class="form-control" placeholder="keywords">
         </div>
-      </div>
+        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+        </form>
+        </li>
+          <!-- <li><h4><%= user.name %>'s Calendar for <%= user.zipcode %></h4></li> -->
+          <li><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#addEvent"><span class="glyphicon glyphicon-plus"></span></button></li>
+          <li><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#profileModal"><span class="glyphicon glyphicon-user"></span></button></li>
+          <li>
+            <form action="/login" method="DELETE" style="display: inline;">
+              <input type="submit" value="Log Out">
+<!--                 <button id="log-out" type="button" class="btn btn-default btn-sm">Log Out</button> -->
+            </form>
+          </li>
+      </ul>
     </div>
+  </div>
+</div>
 <!-- <div class="row">
 	<div class="col-md-2 col-md-offset-1">
 		<h4>title</h4>
@@ -65,71 +65,78 @@
 	</div>
 </div> -->
 <h4 style="text-align: left; padding-left: 5%;">category: <%= category %></h4>
-<% events.each do |event| %>
-<div class="event-result row">
-	<div class="col-md-3" id="one">
-    <% if event && event["name"] && event["name"]["text"] %>
-		  <h3><%= event["name"]["text"] %></h3>
-    <% end %>
-    <% if event && event["logo"] %>
-		<img src="<%= event["logo_url"] %>" class="img-thumbnail" style="width: 90px; height: 90px" style="display: inline;">
-    <% end %>
-	</div>
-	<div class="col-md-3" id="two">
-		<div class="row">
-			<strong>date:</strong><br />
-      <% if event && event["start"] && event["start"]["local"] %>
-			<h4><% time = event["start"]["local"] %>
-				<% year = time.split('-')[0] %>
-				<% month = time.split('-')[1] %>
-				<% yo = time.split('-')[2] %>
-				<% date = yo.split('T')[0] %>
-				<% time = yo.split('T')[1] %>
-				<%= year %>/<%= month %>/<%= date %> <%= time %></h4>
+<% if events[0] != nil %>
+  <% events.each do |event| %>
+  <% if event %>
+  <div class="event-result row">
+  	<div class="col-md-3" id="one">
+      <% if event && event["name"] && event["name"]["text"] %>
+  		  <h3><%= event["name"]["text"] %></h3>
       <% end %>
-		</div>
-		<div class="row">
-			<strong>address:</strong><br />
-			<h4>
-        <% if event && event["venue"] && event["venue"]["address"] && event["venue"]["address"]["address_1"] %>
-          <%= event["venue"]["address"]["address_1"] %>,
+      <% if event && event["logo"] %>
+  		<img src="<%= event["logo_url"] %>" class="img-thumbnail" style="width: 90px; height: 90px" style="display: inline;">
+      <% end %>
+  	</div>
+  	<div class="col-md-3" id="two">
+  		<div class="row">
+  			<strong>date:</strong><br />
+        <% if event && event["start"] && event["start"]["local"] %>
+  			<h4><% time = event["start"]["local"] %>
+  				<% year = time.split('-')[0] %>
+  				<% month = time.split('-')[1] %>
+  				<% yo = time.split('-')[2] %>
+  				<% date = yo.split('T')[0] %>
+  				<% time = yo.split('T')[1] %>
+  				<%= year %>/<%= month %>/<%= date %> <%= time %></h4>
         <% end %>
-        <% if event && event["venue"] && event["venue"]["address"] && event["venue"]["address"]["city"] %>
-				  <%= event["venue"]["address"]["city"] %>,
-        <% end %> 
-        <% if event && event["venue"] && event["venue"]["address"] && event["venue"]["address"]["region"] %>
-				<%= event["venue"]["address"]["region"] %>,<br />
+  		</div>
+  		<div class="row">
+  			<strong>address:</strong><br />
+  			<h4>
+          <% if event && event["venue"] && event["venue"]["address"] && event["venue"]["address"]["address_1"] %>
+            <%= event["venue"]["address"]["address_1"] %>,
+          <% end %>
+          <% if event && event["venue"] && event["venue"]["address"] && event["venue"]["address"]["city"] %>
+  				  <%= event["venue"]["address"]["city"] %>,
+          <% end %> 
+          <% if event && event["venue"] && event["venue"]["address"] && event["venue"]["address"]["region"] %>
+  				<%= event["venue"]["address"]["region"] %>,<br />
+          <% end %>
+          <% if event && event["venue"] && event["venue"]["address"] && event["venue"]["address"]["postal_code"] %>
+  				<%= event["venue"]["address"]["postal_code"] %>, 
+          <% end %> 
+          <% if event && event["venue"] && event["venue"]["address"] && event["venue"]["address"]["country"] %>
+  				<%= event["venue"]["address"]["country"] %>
+          <% end %> 
+  			</h4>
+  		</div>
+    </div> 
+  	<div class="col-md-3" id="three">
+  		<div class="row">
+        <% if event && event["description"] && event["description"]["text"] %>
+  			<p>
+  			<strong>description:</strong> <%= event["description"]["text"] %>
+  			</p>
         <% end %>
-        <% if event && event["venue"] && event["venue"]["address"] && event["venue"]["address"]["postal_code"] %>
-				<%= event["venue"]["address"]["postal_code"] %>, 
-        <% end %> 
-        <% if event && event["venue"] && event["venue"]["address"] && event["venue"]["address"]["country"] %>
-				<%= event["venue"]["address"]["country"] %>
-        <% end %> 
-			</h4>
-		</div>
-  </div> 
-	<div class="col-md-3" id="three">
-		<div class="row">
-      <% if event && event["description"] && event["description"]["text"] %>
-			<p>
-			<strong>description:</strong> <%= event["description"]["text"] %>
-			</p>
-      <% end %>
-      <% if event && event["url"] %>
-			<p><a href="<%= event["url"] %>"><%= event["url"] %></a></p>
-      <% end %>
-		</div>
-		<div class="button-option row">
-			<button type="button" class="btn btn-info" id="add-eventbrite">add event</button>&nbsp;&nbsp;
-			<button type="button" class="btn btn-info" id="share">share</button>
-		</div>	
-	</div>
-	<div class="col-md-3" id="four">
-		<div id="map-canvas" style="width: 50%; height: 50%"></div>
-	</div>
-</div>
-<hr style="border-top: 1px solid #D4D4D4;"/>
+        <% if event && event["url"] %>
+  			<p><a href="<%= event["url"] %>"><%= event["url"] %></a></p>
+        <% end %>
+  		</div>
+  		<div class="button-option row">
+  			<button type="button" class="btn btn-info" id="add-eventbrite">add event</button>&nbsp;&nbsp;
+  			<button type="button" class="btn btn-info" id="share">share</button>
+  		</div>	
+  	</div>
+  	<div class="col-md-3" id="four">
+  		<div id="map-canvas"></div>
+  	  </div>
+  </div>
+  <hr style="border-top: 1px solid #D4D4D4;"/>
+  <% end %>
+  <% end %>
+<% else %>
+  <h1>404</h1>
+  <h2>no results. search again!</h2>
 <% end %>
 
 <!-- modal for add event -->
@@ -251,23 +258,23 @@
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">close</span></button>
         <h4 class="modal-title event-title"></h4>
       </div>
-      <div class="modal-body show-event" style="text-align: left;">
+      <div class="modal-body show-event" style="text-align: left;" contenteditable="true">
         <p style="text-align: center;">
           <img class="img-thumbnail event-image" style="width: 90px; height: 90px">
         </p>
-        <label for="inputEmail3" class="col-sm-2 control-label">date:</label>
+        <label for="inputEmail3" class="col-sm-3 control-label">date</label>
           <p class="event-date"></p>
-        <label for="inputEmail3" class="col-sm-2 control-label">category:</label>
+        <label for="inputEmail3" class="col-sm-3 control-label">category</label>
           <p class="event-category"></p>
-        <label for="inputEmail3" class="col-sm-2 control-label">address:</label>
+        <label for="inputEmail3" class="col-sm-3 control-label">address</label>
           <p class="event-address"></p>
-        <label for="inputEmail3" class="col-sm-2 control-label">url:</label>
+        <label for="inputEmail3" class="col-sm-3 control-label">url</label>
           <p class="event-url"></p>
-        <label for="inputEmail3" class="col-sm-2 control-label">description:</label>
+        <label for="inputEmail3" class="col-sm-3 control-label">description</label>
           <p class="event-description"></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">edit</button>
+        <button type="button" class="btn btn-primary" id="editEvent">edit</button>
         <input type="hidden" class="hidden-id"></input>
         <button type="button" class="btn btn-primary" id="deleteEvent">delete</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
