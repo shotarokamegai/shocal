@@ -1,4 +1,4 @@
-<div class="navbar navbar-default navbar-static-top navbar-inverse">
+    <div class="navbar navbar-default navbar-static-top navbar-inverse">
       <div class="container">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
           <span class="icon-bar"></span>
@@ -8,28 +8,32 @@
         <h1 class="logo"><a href="/users/<%= user.id %>">ShoCal</a></h1>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-          	<li>
-          		<form class="navbar-form navbar-left" role="search" action="/users/<%= user.id %>/events" method="POST">
-          		  <div class="dropdown" style="display: inline;">
-  				        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-    			          category
-    			          <span class="caret"></span>
-  				        </button>
-  				        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-    				        <li role="presentation"><a role="menuitem" tabindex="-1">music&nbsp;&nbsp;</a></li>
-    				        <li role="presentation"><a role="menuitem" tabindex="-1">sports&nbsp;</a></li>
-    				        <li role="presentation"><a role="menuitem" tabindex="-1">food&nbsp;&nbsp;&nbsp;</a></li>
-  				        </ul>
-				        </div>
-        		<div class="form-group">
-          			<input name="keyword" type="search" class="form-control" placeholder="search events">
-        		</div>
-        		<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-      			</form>
-          	</li>
+            <li>
+              <form class="navbar-form navbar-left" role="search" action="/users/<%= user.id %>/events" method="POST">
+              <input data-provide="datepicker" id="datepicker" class="form-control" placeholder="date" name="date">
+                <div class="dropdown" style="display: inline;">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                    category
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    <li role="presentation" style="margin-left: 0;"><a role="menuitem" tabindex="-1">music</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1">sports</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1">food/drinks</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1">entertaining</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1">networking</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1">business</a></li>
+                  </ul>
+                </div>
+            <div class="form-group">
+                <input name="keyword" type="search" class="form-control" placeholder="search events">
+            </div>
+            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+            </form>
+            </li>
               <!-- <li><h4><%= user.name %>'s Calendar for <%= user.zipcode %></h4></li> -->
               <li><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#addEvent"><span class="glyphicon glyphicon-plus"></span></button></li>
-              <li><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#profileModal"><span class="glyphicon glyphicon-user"></span></a></button></li>
+              <li><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#profileModal"><span class="glyphicon glyphicon-user"></span></button></li>
               <li>
                 <form action="/login" method="DELETE" style="display: inline;">
                   <input type="submit" value="Log Out">
@@ -64,12 +68,17 @@
 <% events.each do |event| %>
 <div class="event-result row">
 	<div class="col-md-3" id="one">
-		<h3><%= event["name"]["text"] %></h3>
+    <% if event && event["name"] && event["name"]["text"] %>
+		  <h3><%= event["name"]["text"] %></h3>
+    <% end %>
+    <% if event && event["logo"] %>
 		<img src="<%= event["logo_url"] %>" class="img-thumbnail" style="width: 90px; height: 90px" style="display: inline;">
+    <% end %>
 	</div>
 	<div class="col-md-3" id="two">
 		<div class="row">
 			<strong>date:</strong><br />
+      <% if event && event["start"] && event["start"]["local"] %>
 			<h4><% time = event["start"]["local"] %>
 				<% year = time.split('-')[0] %>
 				<% month = time.split('-')[1] %>
@@ -77,45 +86,39 @@
 				<% date = yo.split('T')[0] %>
 				<% time = yo.split('T')[1] %>
 				<%= year %>/<%= month %>/<%= date %> <%= time %></h4>
-		</div>	
+      <% end %>
+		</div>
 		<div class="row">
 			<strong>address:</strong><br />
-      <% binding.pry %>
 			<h4>
-        <% if event["venue"]["address"]["address_1"] != nil %>
+        <% if event && event["venue"] && event["venue"]["address"] && event["venue"]["address"]["address_1"] %>
           <%= event["venue"]["address"]["address_1"] %>,
-        <% else %>
-           , 
         <% end %>
-        <% if event["venue"]["address"]["city"] != nil %>
+        <% if event && event["venue"] && event["venue"]["address"] && event["venue"]["address"]["city"] %>
 				  <%= event["venue"]["address"]["city"] %>,
-        <% else %>
-           , 
         <% end %> 
-        <% if event["venue"]["address"]["region"] != nil %>
+        <% if event && event["venue"] && event["venue"]["address"] && event["venue"]["address"]["region"] %>
 				<%= event["venue"]["address"]["region"] %>,<br />
-        <% else %>
-           ,<br />
         <% end %>
-        <% if event["venue"]["address"]["postal_code"] != nil %>
+        <% if event && event["venue"] && event["venue"]["address"] && event["venue"]["address"]["postal_code"] %>
 				<%= event["venue"]["address"]["postal_code"] %>, 
-        <% else %>
-           , 
         <% end %> 
-        <% if event["venue"]["address"]["country"] != nil %>               
+        <% if event && event["venue"] && event["venue"]["address"] && event["venue"]["address"]["country"] %>
 				<%= event["venue"]["address"]["country"] %>
-        <% else %>
-           
         <% end %> 
 			</h4>
 		</div>
   </div> 
 	<div class="col-md-3" id="three">
 		<div class="row">
+      <% if event && event["description"] && event["description"]["text"] %>
 			<p>
 			<strong>description:</strong> <%= event["description"]["text"] %>
 			</p>
+      <% end %>
+      <% if event && event["url"] %>
 			<p><a href="<%= event["url"] %>"><%= event["url"] %></a></p>
+      <% end %>
 		</div>
 		<div class="button-option row">
 			<button type="button" class="btn btn-info" id="add-eventbrite">add event</button>&nbsp;&nbsp;
@@ -129,7 +132,7 @@
 <hr style="border-top: 1px solid #D4D4D4;"/>
 <% end %>
 
-<!-- Modal for Add Event -->
+<!-- modal for add event -->
 <div class="modal fade" id="addEvent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -142,25 +145,25 @@
           <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">title</label>
             <div class="col-sm-10">
-              <input id="title" class="form-control" placeholder="Title">
+              <input id="title" class="form-control" placeholder="title">
             </div>
           </div>
           <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">date</label>
             <div class="col-sm-10">
-              <input id="date" class="form-control" placeholder="Date">
+              <input data-provide="datepicker" id="datapicker" class="form-control" placeholder="date" name="date">
             </div>
           </div>
           <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">address</label>
             <div class="col-sm-10">
-              <input id="address" class="form-control" placeholder="Address">
+              <input id="address" class="form-control" placeholder="address">
             </div>
           </div>
           <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">url</label>
             <div class="col-sm-10">
-              <input id="url" class="form-control" placeholder="URL">
+              <input id="url" class="form-control" placeholder="url">
             </div>
           </div>
           <div class="form-group">
@@ -202,12 +205,12 @@
   </div>
 </div>
 
-<!-- Modal for Profile -->
+<!-- modal for profile -->
 <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">close</span></button>
         <h4 class="modal-title" id="myModalLabel"><%= user.name %></h4>
       </div>
       <div class="modal-body">
@@ -233,9 +236,42 @@
         </form>  
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="update-profile">Save changes</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+        <button type="button" class="btn btn-primary" id="update-profile">save changes</button>
       </div>
     </div>
   </div>
 </div>
+
+<!-- modal for show an event -->
+<div class="modal fade" id="showEvent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">close</span></button>
+        <h4 class="modal-title event-title"></h4>
+      </div>
+      <div class="modal-body show-event" style="text-align: left;">
+        <p style="text-align: center;">
+          <img class="img-thumbnail event-image" style="width: 90px; height: 90px">
+        </p>
+        <label for="inputEmail3" class="col-sm-2 control-label">date:</label>
+          <p class="event-date"></p>
+        <label for="inputEmail3" class="col-sm-2 control-label">category:</label>
+          <p class="event-category"></p>
+        <label for="inputEmail3" class="col-sm-2 control-label">address:</label>
+          <p class="event-address"></p>
+        <label for="inputEmail3" class="col-sm-2 control-label">url:</label>
+          <p class="event-url"></p>
+        <label for="inputEmail3" class="col-sm-2 control-label">description:</label>
+          <p class="event-description"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">edit</button>
+        <input type="hidden" class="hidden-id"></input>
+        <button type="button" class="btn btn-primary" id="deleteEvent">delete</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

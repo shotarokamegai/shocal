@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery-ui
 //= require moment
 //= require fullcalendar
 //= require turbolinks
@@ -55,37 +56,49 @@ $(function(){
 //add indivisual event
 
 	$('button#add-event').click(function(e){
-		alert('an event has been updated!');
+		alert('your event has been created!');
 		e.preventDefault();
 		var userId = window.location.pathname.split('/')[2];
 		var title = $('input#title').val();
-		var date = $('input#date').val();
+		$('input#title').val('');
+		var date = $('input#datapicker').val();
+		$('input#datapicker').val('');
 		var address = $('input#address').val();
+		$('input#address').val('');
 		var url = $('input#url').val();
-		var image = $('input#image').val();	
+		$('input#url').val('');
+		var image = $('input#image').val();
+		$('input#image').val('');
 		var category = $('button.dropdown-toggle')[1]
-		category = $(category).attr('value');	
-		var description = $('input#description').val();	
-		$.ajax({
-            url: '/add',
-            data: { user_id: userId, title: title, date: date, address: address, url: url, image: image, category: category, description: description },
-            type: 'POST',
-            success: function(data){
-        		var userId = window.location.pathname.split('/')[2]
-				var day = $('tr').children().find('td[data-date=' + data.date + ']')[0];
-				var a = document.createElement('a');
-				$(a).attr('class', 'event');
-				$(a).attr('id', data.id);			
-				$(a).text(data.title);
-				$('div.event').append(a);
-			}
-		});
+		category = $(category).attr('value');
+		$(category).attr('value', 'category');
+		var description = $('textarea#description').val();
+		$('textarea#description').val('');
+		addAjax(userId, title, date, address, url, image, category, description);
+	});
+
+//edit event
+
+	$('button#editEvent').click(function(){
+		alert('your event has been edited!');
+		var eventId = $('input.hidden-id').attr('value');
+		var userId = window.location.pathname.split('/')[2];
+		var title = $('p.event-title').text();	
+		var date = $('p.event-date').text();	
+		var address = $('p.event-address').text();	
+		var url = $('p.event-url').text();	
+		var image = $('p.event-image').text();	
+		var category = $('p.event-category').text();
+		var description = $('p.event-description').text();
+		$.ajax({ url: '/events/' + eventId, type: 'PUT', data: { user_id: userId, id: eventId, title: title, date: date, address: address, url: url, image: image, category: category, description: description }, success: function(){
+
+		} });
 	});
 
 //update profile
 
 	$('button#update-profile').click(function(e){
-		console.log('Profile Update!');
+		console.log('profile updated!');
 		e.preventDefault();
 		var userId = window.location.pathname.split('/')[2];
 		var name = $('input#name').val();
@@ -111,23 +124,27 @@ $(function(){
 //add events from eventbrite
 
 	$('button#add-eventbrite').click(function(){
-		alert('an event has been updated!');
+		alert('your event has been created!');
+		var userId = window.location.pathname.split('/')[2];
 		var description = $(this).parent().parent().children()[0];
 		description     = $(description).find('p')[0];
 		description     = $(description).val();
 		var title       = $(this).parent().parent().parent().find('div#one').find('h3').text();
 		var image       = $(this).parent().parent().parent().find('div#one').find('img').attr('src');
 		var date        = $(this).parent().parent().parent().find('div#two').find('h4')[0];
-		date            = $(date).text();
+		date            = $(date).text().split(' ')[0];
 		date            = date.replace(/^\s+/g, "");
 		date            = date.replace(/\s+$/g, "");
 		var address     = $(this).parent().parent().parent().find('div#two').find('h4')[1];
-		address         = $(date).text();
+		address         = $(address).text();
 		address         = address.replace(/^\s+/g, "");
 		address         = address.replace(/\s+$/g, "");
 		var url         = $(this).parent().parent().parent().find('div#three');
 		url             = $(url).find('a').attr('href');
-		$.ajax({ url: '/add' })
+		var category    = $('h4')[0];
+		category        = $(category).text();
+		category        = $(category).replace(/category/, '');
+		addBriteAjax(userId, title, date, address, url, image, category, description);
 	});
 
 //change months
@@ -141,8 +158,12 @@ $(function(){
 //delete event
 	
 	 $('button#deleteEvent').click(function(){
+		alert('your event has been deleted :(');
 	 	var eventId = $(this).parent().children()[1];
 	 	eventId     = $(eventId).attr('value');
+	 	var id = $(this).parent().find('input').attr('value');
+	 	var icon = $('body').find('a[id=' + id + ']');
+	 	$(icon).remove();
 	 	$.ajax({ url: '/events/' + eventId, type: 'DELETE', data: { id: eventId }, success: function(){
 			renderEvents();	 		
 	 	} });
@@ -154,6 +175,36 @@ $(function(){
 
 $(function(){
 	$( "#datepicker" ).datepicker();
+	var days = $('body').find('td[data-handler="selectDay"]').children();
+	$(days).css('color', 'black');
+	$(days).attr('style', 'text-decoration: none;');
+	$(days).css('color', 'black');
+	$(days).attr('style', 'border: 1px solid #aaaaaa;');
+	$('div#ui-datepicker-div').css('background-color', 'white');
+	$('div#ui-datepicker-div').attr('style', 'border: 1px solid #aaaaaa;');
+	$('div#ui-datepicker-div').attr('style', 'padding: 0.5%;');
+	$('div#ui-datepicker-div').attr('style', '	text-decoration: none;');
+	$('div.date-picker-header').attr('style', 'border: 1px solid #aaaaaa;');
+	$('div.date-picker-header').attr('style', 'background-color: #cccccc;');
+	$('div.date-picker-header').attr('style', 'font-weight: bold;');
+});
+
+//data picker
+
+$(function(){
+	$( "#datapicker" ).datepicker();
+	var days = $('body').find('td[data-handler="selectDay"]').children();
+	$(days).css('color', 'black');
+	$(days).attr('style', 'text-decoration: none;');
+	$(days).css('color', 'black');
+	$(days).attr('style', 'border: 1px solid #aaaaaa;');
+	$('div#ui-datapicker-div').css('background-color', 'white');
+	$('div#ui-datapicker-div').attr('style', 'border: 1px solid #aaaaaa;');
+	$('div#ui-datapicker-div').attr('style', 'padding: 0.5%;');
+	$('div#ui-datapicker-div').attr('style', '	text-decoration: none;');
+	$('div.date-picker-header').attr('style', 'border: 1px solid #aaaaaa;');
+	$('div.date-picker-header').attr('style', 'background-color: #cccccc;');
+	$('div.date-picker-header').attr('style', 'font-weight: bold;');
 });
 
 //limit the number of letters in description
@@ -185,19 +236,21 @@ function renderEvents(){
 		$(div).attr('class', 'event');
 		$(this).append(div);
 	});
-	var userId = window.location.pathname.split('/')[2]
+	var userId = window.location.pathname.split('/')[2];
 	$.ajax({url: '/calendar', type: 'GET', data: { user_id: userId } }).done(function(events){
 		$(events).each(function(e){
 			var day = $('tr').children().find('td[data-date=' + this.date + ']')[0];
 			var div = $(day).find('div.event');
+			$(div).children().remove();
 			var a = document.createElement('a');
-			var span = document.createElement('span');
-			$(span).attr('class', 'glyphicon glyphicon-file');
+			// var span = document.createElement('span');
+			// $(span).attr('class', 'glyphicon glyphicon-file');
 			$(a).attr('class', 'event');
 			$(a).attr('id', this.id);		
 			$(a).attr('data-target', '#showEvent')
 			$(a).attr('data-toggle' ,'modal')
-			$(a).append(span);
+			// $(a).append(span);
+			$(a).text(this.title);
 			$(div).append(a);
 			$(day).append(div);
 
@@ -216,19 +269,76 @@ function renderEvents(){
 					$('h4.event-title').text(e.title);
 					$('p.event-date').text(e.date);
 					$('p.event-category').text(e.category);
-					$('p.event-address').text(e.address);
-					var a = document.createElement('a');
-					$(a).attr('id', 'showEventModal');
-					$(a).text(e.url);
 					$('input.hidden-id').attr('value', e.id);
-					$('p.event-url').text('');
-					$('p.event-url').append(a);
-					$('p.event-description').text(e.description);
-					$('div.show-event').attr('background-image', 'url(' + e.image + ')');
+					if (e.address != "") {
+						$('p.event-address').text(e.address);
+					} else {
+						$('p.event-address').text('null');
+					};
+					if (e.url != "") {
+						var a = document.createElement('a');
+						$(a).attr('id', 'showEventModal');
+						$(a).attr('href', e.url);
+						$(a).text(e.url);
+						$('p.event-url').append(a);
+					} else {
+						$('p.event-url').text('null');
+					};
+					if (e.description != "") {
+						$('p.event-description').text(e.description);						
+					} else {
+						$('p.event-description').text('null');
+					};
+					$('img.event-image').attr('src', e.image);
 				} });
 
 			});
 		});
+	});
+};
+
+////////////////////////////////////////////////////////
+
+function addAjax(userId, title, date, address, url, image, category, description){
+	$.ajax({
+        url: '/add',
+        data: { user_id: userId, title: title, date: date, address: address, url: url, image: image, category: category, description: description },
+        type: 'POST',
+        success: function(data){
+    		var userId = window.location.pathname.split('/')[2]
+			var day = $('tr').children().find('td[data-date=' + data.date + ']')[0];
+			var a = document.createElement('a');
+			$(a).attr('class', 'event');
+			$(a).attr('id', data.id);	
+			$(a).text(data.title);
+			$(day).find('div.event').append(a);
+			renderEvents();
+		}
+	});
+};
+
+///////////////////////////////////////////////////////
+
+function addBriteAjax(userId, title, date, address, url, image, category, description){
+	$.ajax({
+        url: '/add/eventbrite',
+        data: { user_id: userId, title: title, date: date, address: address, url: url, image: image, category: category, description: description },
+        type: 'POST'
+  //       success: function(data){
+  //   		var userId = window.location.pathname.split('/')[2]
+  //   		var date   = data.date.split('-');
+  //   		var year   = date[1].concat('-');
+  //   		var month  = date[2].concat('-');
+  //   		var day    = date[0];
+  //   		var yay    = year.concat(month);
+  //   		yay        = yay.concat(day);
+		// 	var day = $('tr').children().find('td[data-date=' + yay + ']')[0];
+		// 	var a = document.createElement('a');
+		// 	$(a).attr('class', 'event');
+		// 	$(a).attr('id', data.id);	
+		// 	$(a).text(data.title);
+		// 	$(day).find('div.event').append(a);
+		// }
 	});
 };
 

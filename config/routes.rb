@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get '/signup' => 'session#signup' 
   get '/calendar' => 'events#set'
   post '/add' => 'events#createown'
+  post '/add/eventbrite' => 'events#eventbrite'
   resources :users
   post '/users/:id/events' => 'events#create'
   post '/users/:id/events/:id' => 'events#event'
