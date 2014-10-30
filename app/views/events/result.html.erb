@@ -1,48 +1,49 @@
 <div class="navbar navbar-default navbar-static-top navbar-inverse">
-  <div class="container">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <h1 class="logo"><a href="/users/<%= user.id %>">ShoCal</a></h1>
-    <div class="navbar-collapse collapse navbar-responsive-collapse">
-      <ul class="nav navbar-nav">
-        <li>
-          <form class="navbar-form navbar-left" role="search" action="/users/<%= user.id %>/events" method="POST">
-          <input data-provide="datepicker" id="datepicker" class="form-control" placeholder="date" name="date">
-            <div class="dropdown" style="display: inline;">
-              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-                category
-                <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                <li role="presentation" style="margin-left: 0;"><a role="menuitem" tabindex="-1">music</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1">sports</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1">food/drinks</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1">entertaining</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1">networking</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1">business</a></li>
-              </ul>
+      <div class="container">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <h1 class="logo"><a href="/users/<%= user.id %>">ShoCal</a></h1>
+        <div class="navbar-collapse collapse navbar-responsive-collapse">
+          <ul class="nav navbar-nav">
+            <li>
+              <form class="navbar-form navbar-left" role="search" action="/users/<%= user.id %>/events" method="POST">
+              <input data-provide="datepicker" id="datepicker" class="form-control" placeholder="date" name="date">
+                <div class="dropdown" style="display: inline;">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                    category
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    <li role="presentation" style="margin-left: 0;"><a role="menuitem" tabindex="-1">music</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1">sports</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1">food/drinks</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1">entertaining</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1">networking</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1">business</a></li>
+                  </ul>
+                </div>
+            <div class="form-group">
+                <input name="keyword" type="search" class="form-control" placeholder="keywords">
             </div>
-        <div class="form-group">
-            <input name="keyword" type="search" class="form-control" placeholder="keywords">
-        </div>
-        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-        </form>
-        </li>
-          <!-- <li><h4><%= user.name %>'s Calendar for <%= user.zipcode %></h4></li> -->
-          <li><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#addEvent"><span class="glyphicon glyphicon-plus"></span></button></li>
-          <li><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#profileModal"><span class="glyphicon glyphicon-user"></span></button></li>
-          <li>
-            <form action="/login" method="DELETE" style="display: inline;">
-              <input type="submit" value="Log Out">
-<!--                 <button id="log-out" type="button" class="btn btn-default btn-sm">Log Out</button> -->
+            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
             </form>
-          </li>
-      </ul>
+            </li>
+              <!-- <li><h4><%= user.name %>'s Calendar for <%= user.zipcode %></h4></li> -->
+              <li><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#addEvent"><span class="glyphicon glyphicon-plus"></span></button></li>
+              <li><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#profileModal"><span class="glyphicon glyphicon-user"></span></button></li>
+              <li>
+                <form action="/login" method="DELETE" style="display: inline;">
+                  <input type="submit" value="Log Out">
+  <!--                 <button id="log-out" type="button" class="btn btn-default btn-sm">Log Out</button> -->
+                </form>
+              </li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </div>
 <!-- <div class="row">
 	<div class="col-md-2 col-md-offset-1">
 		<h4>title</h4>
@@ -63,6 +64,7 @@
 		
 	</div>
 </div> -->
+<div class="container">
   <h4 style="text-align: left; padding-left: 5%;">category: <%= category %></h4>
   <% if events[0] != nil %>
     <% events.each do |event| %>
