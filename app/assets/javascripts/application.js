@@ -26,8 +26,40 @@ $(document).ready(function() {
 
     $('#calendar').fullCalendar({
         // put your options and callbacks here
-    })
+        height: 500,
 
+        dayClick: function(date, jsEvent, view) {
+
+		var userId = window.location.pathname.split('/')[2];
+
+        // alert('Clicked on: ' + date.format());
+
+        // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+
+        // alert('Current view: ' + view.name);
+
+        var day = date.format();
+
+     //    $.ajax({ url: '/users/' + userId + '/day', type: 'POST', data: { day: day }});
+     //    console.log('Day Clicked');
+     //    // change the day's background color just for fun
+    	// }
+
+     //     events: [
+	    //     {
+	    //         title: 'My Event',
+	    //         start: '2014-11-11',
+	    //         url: 'http://google.com/'
+	    //     }
+     //    // other events here
+    	// ],
+    	// eventClick: function(event) {
+	    //     if (event.url) {
+	    //         window.open(event.url);
+	    //         return false;
+	    //     }
+   	 //    }
+    }})
 });
 
 //render events and calendar
@@ -109,13 +141,19 @@ $(function(){
             data: { user_id: userId, name: name, email: email, zipcode: zipcode },
             type: 'PUT',
             success: function(e){
- 				var user  = e[0].name
- 				var city  = e[1]
- 				var state = e[2]
+ 				var user  = e[0].name;
+ 				var email = e[0].email;
+ 				var city  = e[1];
+ 				var state = e[2];
             	var h2    = $('h2')[0];
             	$(h2).text(user + "'s calendar for " + city + ", " + state);
             	var modalTitle = $('h4#myModalLabel')[1];
-            	modalTitle     = $(modalTitle).text(user);
+            	$(modalTitle).text(user);
+            	$('iunput#name').val(user);
+            	$('input#email').val(email);
+            	$('p.name').text(user);
+            	$('p.email').test(email);
+            	$('p.zipcode').text(zipcode);
             }
 		});
 		alert('your profile has been updated!');
@@ -170,7 +208,6 @@ $(function(){
 	 	var icon = $('body').find('a[id=' + id + ']');
 	 	$(icon).remove();
 	 	$.ajax({ url: '/events/' + eventId, type: 'DELETE', data: { id: eventId }, success: function(){
-			renderEvents();	 		
 	 	} });
 	 });
 
@@ -310,7 +347,7 @@ function addAjax(userId, title, date, address, url, image, category, description
         data: { user_id: userId, title: title, date: date, address: address, url: url, image: image, category: category, description: description },
         type: 'POST',
         success: function(data){
-    		var userId = window.location.pathname.split('/')[2]
+    		// var userId = window.location.pathname.split('/')[2]
 			var day = $('tr').children().find('td[data-date=' + data.date + ']')[0];
 			var a = document.createElement('a');
 			$(a).attr('class', 'event');
@@ -329,21 +366,6 @@ function addBriteAjax(userId, title, date, address, url, image, category, descri
         url: '/add/eventbrite',
         data: { user_id: userId, title: title, date: date, address: address, url: url, image: image, category: category, description: description },
         type: 'POST'
-  //       success: function(data){
-  //   		var userId = window.location.pathname.split('/')[2]
-  //   		var date   = data.date.split('-');
-  //   		var year   = date[1].concat('-');
-  //   		var month  = date[2].concat('-');
-  //   		var day    = date[0];
-  //   		var yay    = year.concat(month);
-  //   		yay        = yay.concat(day);
-		// 	var day = $('tr').children().find('td[data-date=' + yay + ']')[0];
-		// 	var a = document.createElement('a');
-		// 	$(a).attr('class', 'event');
-		// 	$(a).attr('id', data.id);	
-		// 	$(a).text(data.title);
-		// 	$(day).find('div.event').append(a);
-		// }
 	});
 };
 

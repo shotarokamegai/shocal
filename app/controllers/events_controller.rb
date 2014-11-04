@@ -62,7 +62,6 @@ class EventsController < ApplicationController
 				arry << events[i]
 				i = i + 1
 			end
-			binding.pry
 			render(:result, { locals: { events: arry, user: user, category: params[:category] } } )
 		else
 			response = HTTParty.get('https://www.eventbriteapi.com/v3/events/search/?q=' + keyword + '&venue.city=' + city + '&token=L63P3AURXQRRWKHV36JC')
@@ -123,7 +122,13 @@ class EventsController < ApplicationController
 			category: params[:category],
 			description: params[:description]
 		})
-		redirect_to '/users/#{params[:user_id]}/events'
+		redirect_to '/users'
+	end
+
+	def day
+		user = User.find(session[:user_id])
+		events = user.events.where(date: params[:day])
+		render(:day, { locals: { user: user, events: events } } )
 	end
 
 	def update
@@ -142,11 +147,11 @@ class EventsController < ApplicationController
 	def destroy
 		event = Event.find(params[:id])
 		a = ""
-		event.destroy
-		event.destroy
-		respond_to do |format|
-			format.json { render :json => a }
-		end		
+		event.delete
+		# respond_to do |format|
+		# 	format.json { render :json => a }
+		# end
+		redirect_to '/users/#{user_id}'		
 	end
 end
 

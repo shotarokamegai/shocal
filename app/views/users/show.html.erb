@@ -1,4 +1,4 @@
-    <div class="navbar navbar-default navbar-static-top navbar-inverse">
+    <div class="navbar navbar-default navbar-fixed-top navbar-inverse">
       <div class="container">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
           <span class="icon-bar"></span>
@@ -36,8 +36,7 @@
               <li><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#profileModal"><span class="glyphicon glyphicon-user"></span></button></li>
               <li>
                 <form action="/login" method="DELETE" style="display: inline;">
-                  <input type="submit" value="Log Out">
-  <!--                 <button id="log-out" type="button" class="btn btn-default btn-sm">Log Out</button> -->
+                  <input type="submit" value="log out">
                 </form>
               </li>
           </ul>
@@ -135,8 +134,46 @@
   </div>
 </div>
 
-<!-- modal for profile -->
+<!-- modal for showing profile -->
 <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">close</span></button>
+        <h4 class="modal-title" id="myModalLabel"><%= user.name %></h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" role="form" style="text-align: left;">
+          <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">username</label>
+            <div class="col-sm-10">
+              <p class="name"><%= user.name %></p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">email</label>
+            <div class="col-sm-10">
+              <p class="email"><%= user.email %></p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">zipcode</label>
+            <div class="col-sm-10">
+              <p class="zipcode"><%= user.zipcode %></p>
+            </div>
+          </div>
+        </form>  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">close</button>
+        <button type="button" class="btn btn-default btn-primary" data-toggle="modal" data-target="#edit-profile">edit profile</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal for edit profile -->
+<div class="modal fade" id="edit-profile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -186,15 +223,15 @@
           <img class="img-thumbnail event-image" style="width: 150px; height: 130px">
         </p>
         <label for="inputEmail3" class="col-sm-3 control-label">date</label>
-          <p class="event-date"></p>
+          <p class="event-date"></p><br />
         <label for="inputEmail3" class="col-sm-3 control-label">category</label>
-          <p class="event-category"></p>
+          <p class="event-category"></p><br />
         <label for="inputEmail3" class="col-sm-3 control-label">address</label>
-          <p class="event-address"></p>
+          <p class="event-address"></p><br />
         <label for="inputEmail3" class="col-sm-3 control-label">url</label>
-          <p class="event-url"></p>
+          <p class="event-url"></p><br />
         <label for="inputEmail3" class="col-sm-3 control-label">description</label>
-          <p class="event-description"></p>
+          <p class="event-description"></p><br />
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="editEvent">edit</button>

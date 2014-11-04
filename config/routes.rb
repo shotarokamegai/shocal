@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   post '/users/:id/events' => 'events#create'
   post '/users/:id/events/:id' => 'events#event'
   resources :events
+  post '/users/:id/day' => 'events#day'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

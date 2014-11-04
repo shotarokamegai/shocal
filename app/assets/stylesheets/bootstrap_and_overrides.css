@@ -11,6 +11,11 @@ body {
 	font-family: 'Titillium Web', sans-serif;
 	background: #F0F0F0;
 	cursor: pointer;
+	height: 500px;
+}
+
+div.col-lg-12 {
+	margin-top: 50px;
 }
 
 div.fc-view-container {
@@ -95,7 +100,7 @@ li {
 }
 
 div.event-result {
-	height: 200px;
+	height: 230px;
 	position: relative;
 }
 
@@ -169,8 +174,14 @@ a.event {
 	margin-right: 5%;
 	text-decoration: none;
 	color: black;
+	background: #9BFF65;
+	border-radius: 5px;
 }
 
 #ui-datepicker-div {
 	display: none;
+}
+
+h4#category {
+	margin-top: 80px;
 }
