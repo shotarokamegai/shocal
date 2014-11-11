@@ -271,6 +271,7 @@ $(function(){
 ////////////////////////////////////////////////////////
 
 function renderEvents(){
+	$('div.event').remove();
 	var daysCol = $('td.fc-day')
 	$(daysCol).each(function(){
 		$(this).css('style', 'position: relative;');
@@ -283,10 +284,8 @@ function renderEvents(){
 		$(events).each(function(e){
 			var day = $('tr').children().find('td[data-date=' + this.date + ']')[0];
 			var div = $(day).find('div.event');
-			$(div).children().remove();
-			$(div).remove();
+			$(div).children().find('a[id=' + this.id + ']').remove();
 			var a = document.createElement('a');
-			var div = document.createElement('div');
 			$(div).attr('class', 'event');
 			$(a).attr('class', 'event');
 			$(a).attr('id', this.id);		
@@ -348,12 +347,12 @@ function addAjax(userId, title, date, address, url, image, category, description
         type: 'POST',
         success: function(data){
     		// var userId = window.location.pathname.split('/')[2]
-			var day = $('tr').children().find('td[data-date=' + data.date + ']')[0];
-			var a = document.createElement('a');
-			$(a).attr('class', 'event');
-			$(a).attr('id', data.id);	
-			$(a).text(data.title);
-			$(day).find('div.event').append(a);
+			// var day = $('tr').children().find('td[data-date=' + data.date + ']')[0];
+			// var a = document.createElement('a');
+			// $(a).attr('class', 'event');
+			// $(a).attr('id', data.id);	
+			// $(a).text(data.title);
+			// $(day).find('div.event').append(a);
 			renderEvents();
 		}
 	});
