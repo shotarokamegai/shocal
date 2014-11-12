@@ -26,7 +26,7 @@ $(document).ready(function() {
 
     $('#calendar').fullCalendar({
         // put your options and callbacks here
-        height: 500,
+        height: 600,
 
         dayClick: function(date, jsEvent, view) {
 

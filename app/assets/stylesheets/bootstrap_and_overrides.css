@@ -25,6 +25,7 @@ div.fc-view-container {
 h1.login {
 	margin-top: 5%;
 	margin-bottom: -10%;
+	font-size: 5em;
 }
 
 div.login {
@@ -47,6 +48,7 @@ div.signup {
 
 h1.signup {
 	margin-top: 5%;
+	font-size: 5em;
 }
 
 div.signup input {
@@ -67,6 +69,10 @@ h1.logo {
 
 h1.logo a {
 	text-decoration: none;
+}
+
+h2.userlocation {
+	margin-top: 40px;
 }
 
 ul.nav.navbar-nav {
